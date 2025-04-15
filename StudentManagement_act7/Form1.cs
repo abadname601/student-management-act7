@@ -7,7 +7,7 @@ namespace StudentManagement_act7
 {
     public partial class Form1 : Form
     {
-        string connectionString = "server=localhost;uid=root;pwd=;database=studentdb;";
+        string connectionString = "server=localhost;uid=root;pwd=;database=studentmanagement;";
 
         public Form1()
         {

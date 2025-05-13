@@ -2,21 +2,26 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.IO;
-using Microsoft.Office.Interop.Excel;
 using System.Drawing;
 using System.Collections.Generic;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using OfficeOpenXml.Table;
 
 namespace StudentManagementSystem.Utilities
 {
     public class ExcelExporter
     {
         /// <summary>
-        /// Exports a DataTable to Excel with formatting and filtering options
+        /// Exports a DataTable to Excel with formatting and filtering options using EPPlus
         /// </summary>
         public static void ExportToExcel(DataTable dt, string title, string filePath = null)
         {
             try
             {
+                // Set the license context (required for EPPlus)
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                
                 // If no file path is provided, ask the user
                 if (string.IsNullOrEmpty(filePath))
                 {
@@ -35,85 +40,92 @@ namespace StudentManagementSystem.Utilities
                     filePath = saveDialog.FileName;
                 }
 
-                // Start Excel and create a new workbook
-                Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-                excel.DisplayAlerts = false;
-                Workbook workbook = excel.Workbooks.Add(Type.Missing);
-                Worksheet worksheet = workbook.ActiveSheet;
-
-                // Report title
-                Range headerRange = worksheet.Range["A1", "G1"];
-                headerRange.Merge();
-                headerRange.Value = title;
-                headerRange.Font.Bold = true;
-                headerRange.Font.Size = 16;
-                headerRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
-                headerRange.Interior.Color = ColorTranslator.ToOle(Color.LightBlue);
-
-                // Generated date
-                Range dateRange = worksheet.Range["A2", "G2"];
-                dateRange.Merge();
-                dateRange.Value = "Generated on: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                dateRange.Font.Italic = true;
-                dateRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
-
-                // Add column headers at row 4
-                int colIndex = 1;
-                foreach (DataColumn column in dt.Columns)
+                using (var package = new ExcelPackage())
                 {
-                    worksheet.Cells[4, colIndex] = column.ColumnName;
-                    Range colHeader = worksheet.Cells[4, colIndex];
-                    colHeader.Font.Bold = true;
-                    colHeader.Interior.Color = ColorTranslator.ToOle(Color.LightGray);
-                    colHeader.Borders.LineStyle = XlLineStyle.xlContinuous;
-                    colHeader.Borders.Weight = XlBorderWeight.xlThin;
-                    colHeader.HorizontalAlignment = XlHAlign.xlHAlignCenter;
-                    colIndex++;
-                }
+                    // Add a new worksheet to the workbook
+                    var worksheet = package.Workbook.Worksheets.Add("Report");
 
-                // Add data starting from row 5
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    for (int j = 0; j < dt.Columns.Count; j++)
+                    // Report title
+                    worksheet.Cells["A1:G1"].Merge = true;
+                    worksheet.Cells["A1"].Value = title;
+                    using (var range = worksheet.Cells["A1:G1"])
                     {
-                        worksheet.Cells[i + 5, j + 1] = dt.Rows[i][j].ToString();
-                        Range cell = worksheet.Cells[i + 5, j + 1];
-                        cell.Borders.LineStyle = XlLineStyle.xlContinuous;
-                        cell.Borders.Weight = XlBorderWeight.xlThin;
+                        range.Style.Font.Bold = true;
+                        range.Style.Font.Size = 16;
+                        range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        range.Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+                    }
 
-                        // For numeric values, align right
-                        if (dt.Columns[j].DataType == typeof(int) || 
-                            dt.Columns[j].DataType == typeof(decimal) || 
-                            dt.Columns[j].DataType == typeof(double))
+                    // Generated date
+                    worksheet.Cells["A2:G2"].Merge = true;
+                    worksheet.Cells["A2"].Value = "Generated on: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    using (var range = worksheet.Cells["A2:G2"])
+                    {
+                        range.Style.Font.Italic = true;
+                        range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    }
+
+                    // Add column headers at row 4
+                    int colIndex = 1;
+                    foreach (DataColumn column in dt.Columns)
+                    {
+                        worksheet.Cells[4, colIndex].Value = column.ColumnName;
+                        using (var cell = worksheet.Cells[4, colIndex])
                         {
-                            cell.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                            cell.NumberFormat = "#,##0.00";
+                            cell.Style.Font.Bold = true;
+                            cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            cell.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                            cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        }
+                        colIndex++;
+                    }
+
+                    // Add data starting from row 5
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dt.Columns.Count; j++)
+                        {
+                            worksheet.Cells[i + 5, j + 1].Value = dt.Rows[i][j].ToString();
+                            using (var cell = worksheet.Cells[i + 5, j + 1])
+                            {
+                                cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                                // For numeric values, align right
+                                if (dt.Columns[j].DataType == typeof(int) || 
+                                    dt.Columns[j].DataType == typeof(decimal) || 
+                                    dt.Columns[j].DataType == typeof(double))
+                                {
+                                    cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                    cell.Style.Numberformat.Format = "#,##0.00";
+                                }
+                            }
+                        }
+
+                        // Alternate row coloring
+                        if (i % 2 == 1)
+                        {
+                            using (var rowRange = worksheet.Cells[i + 5, 1, i + 5, dt.Columns.Count])
+                            {
+                                rowRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                rowRange.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(240, 240, 240));
+                            }
                         }
                     }
 
-                    // Alternate row coloring
-                    if (i % 2 == 1)
-                    {
-                        Range rowRange = worksheet.Range[worksheet.Cells[i + 5, 1], worksheet.Cells[i + 5, dt.Columns.Count]];
-                        rowRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(240, 240, 240));
-                    }
+                    // Add table with filtering
+                    var dataRange = worksheet.Cells[4, 1, dt.Rows.Count + 4, dt.Columns.Count];
+                    var table = worksheet.Tables.Add(dataRange, "DataTable");
+                    table.ShowFilter = true;
+                    table.TableStyle = TableStyles.Medium2;
+
+                    // Auto-fit columns
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                    // Save the file
+                    package.SaveAs(new FileInfo(filePath));
                 }
-
-                // Add AutoFilter to the header row
-                Range dataRange = worksheet.Range[worksheet.Cells[4, 1], worksheet.Cells[dt.Rows.Count + 4, dt.Columns.Count]];
-                dataRange.AutoFilter(1, Type.Missing, XlAutoFilterOperator.xlAnd, Type.Missing, true);
-
-                // Auto-fit columns
-                worksheet.Columns.AutoFit();
-
-                // Save and close
-                workbook.SaveAs(filePath);
-                workbook.Close();
-                excel.Quit();
-
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
 
                 MessageBox.Show($"Report has been exported to: {filePath}", "Export Successful", 
                     MessageBoxButtons.OK, MessageBoxIcon.Information);

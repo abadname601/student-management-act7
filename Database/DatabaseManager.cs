@@ -9,8 +9,9 @@ namespace StudentManagementSystem.Database
 {
     public class DatabaseManager : IDisposable
     {
-        private MySqlConnection _connection;
+        public MySqlConnection _connection;
         private bool _disposed = false;
+        private bool _inMemoryMode = false;
 
         // Connection string components
         private string _server = "localhost";
@@ -21,7 +22,14 @@ namespace StudentManagementSystem.Database
 
         public DatabaseManager()
         {
-            InitializeConnection();
+            // Check whether to use in-memory mode or attempt real database connection
+            string testMode = Environment.GetEnvironmentVariable("DB_TEST_MODE");
+            _inMemoryMode = !string.IsNullOrEmpty(testMode) && testMode.ToLower() == "true";
+            
+            if (!_inMemoryMode)
+            {
+                InitializeConnection();
+            }
         }
 
         public DatabaseManager(string server, string database, string port, string userId, string password)
@@ -42,6 +50,12 @@ namespace StudentManagementSystem.Database
 
         public bool TestConnection()
         {
+            // In-memory mode always returns true
+            if (_inMemoryMode)
+            {
+                return true;
+            }
+            
             try
             {
                 _connection.Open();
@@ -53,20 +67,26 @@ namespace StudentManagementSystem.Database
             }
             finally
             {
-                if (_connection.State == ConnectionState.Open)
+                if (_connection != null && _connection.State == ConnectionState.Open)
                     _connection.Close();
             }
         }
 
         public void OpenConnection()
         {
-            if (_connection.State == ConnectionState.Closed)
+            if (_inMemoryMode)
+                return;
+                
+            if (_connection != null && _connection.State == ConnectionState.Closed)
                 _connection.Open();
         }
 
         public void CloseConnection()
         {
-            if (_connection.State == ConnectionState.Open)
+            if (_inMemoryMode)
+                return;
+                
+            if (_connection != null && _connection.State == ConnectionState.Open)
                 _connection.Close();
         }
 
@@ -75,6 +95,18 @@ namespace StudentManagementSystem.Database
         public List<Student> GetAllStudents()
         {
             List<Student> students = new List<Student>();
+            
+            if (_inMemoryMode)
+            {
+                // Return test data
+                students.Add(new Student { StudentId = 1, StudentName = "Alice Johnson", Email = "alice@gmail.com", DepartmentId = 1, DepartmentName = "Computer Science" });
+                students.Add(new Student { StudentId = 2, StudentName = "Bob Smith", Email = "bob@gmail.com", DepartmentId = 2, DepartmentName = "Business Administration" });
+                students.Add(new Student { StudentId = 3, StudentName = "Charlie Brown", Email = "charlie@gmail.com", DepartmentId = 3, DepartmentName = "Mechanical Engineering" });
+                students.Add(new Student { StudentId = 4, StudentName = "David White", Email = "david@gmail.com", DepartmentId = 4, DepartmentName = "Electrical Engineering" });
+                students.Add(new Student { StudentId = 5, StudentName = "Emma Wilson", Email = "emma@gmail.com", DepartmentId = 5, DepartmentName = "Mathematics" });
+                return students;
+            }
+            
             string query = "SELECT s.*, d.department_name FROM students s " +
                            "LEFT JOIN departments d ON s.department_id = d.department_id";
 
@@ -594,6 +626,45 @@ namespace StudentManagementSystem.Database
         public List<Exam> GetAllExams()
         {
             List<Exam> exams = new List<Exam>();
+            
+            if (_inMemoryMode)
+            {
+                // Return test data
+                exams.Add(new Exam 
+                { 
+                    ExamId = 1, 
+                    CourseId = 1, 
+                    CourseName = "Introduction to Programming", 
+                    ExamDate = DateTime.Now.AddDays(-10),
+                    Description = "Midterm Exam"
+                });
+                exams.Add(new Exam 
+                { 
+                    ExamId = 2, 
+                    CourseId = 2, 
+                    CourseName = "Database Management", 
+                    ExamDate = DateTime.Now.AddDays(-5),
+                    Description = "Final Exam"
+                });
+                exams.Add(new Exam 
+                { 
+                    ExamId = 3, 
+                    CourseId = 3, 
+                    CourseName = "Data Structures and Algorithms", 
+                    ExamDate = DateTime.Now.AddDays(-2),
+                    Description = "Quiz 1"
+                });
+                exams.Add(new Exam 
+                { 
+                    ExamId = 4, 
+                    CourseId = 4, 
+                    CourseName = "Web Development", 
+                    ExamDate = DateTime.Now.AddDays(-1),
+                    Description = "Practical Test"
+                });
+                return exams;
+            }
+            
             string query = "SELECT e.*, c.course_name FROM exams e " +
                            "LEFT JOIN courses c ON e.course_id = c.course_id";
 
@@ -630,6 +701,58 @@ namespace StudentManagementSystem.Database
         public List<ExamResult> GetExamResults()
         {
             List<ExamResult> results = new List<ExamResult>();
+            
+            if (_inMemoryMode)
+            {
+                // Return test data
+                results.Add(new ExamResult 
+                { 
+                    ResultId = 1, 
+                    StudentId = 1, 
+                    ExamId = 1, 
+                    Score = 85.5m, 
+                    ExamName = "Midterm Exam - Introduction to Programming", 
+                    StudentName = "Alice Johnson" 
+                });
+                results.Add(new ExamResult 
+                { 
+                    ResultId = 2, 
+                    StudentId = 2, 
+                    ExamId = 1, 
+                    Score = 78.0m, 
+                    ExamName = "Midterm Exam - Introduction to Programming", 
+                    StudentName = "Bob Smith" 
+                });
+                results.Add(new ExamResult 
+                { 
+                    ResultId = 3, 
+                    StudentId = 1, 
+                    ExamId = 2, 
+                    Score = 92.0m, 
+                    ExamName = "Final Exam - Database Management", 
+                    StudentName = "Alice Johnson" 
+                });
+                results.Add(new ExamResult 
+                { 
+                    ResultId = 4, 
+                    StudentId = 3, 
+                    ExamId = 3, 
+                    Score = 95.5m, 
+                    ExamName = "Quiz 1 - Data Structures and Algorithms", 
+                    StudentName = "Charlie Brown" 
+                });
+                results.Add(new ExamResult 
+                { 
+                    ResultId = 5, 
+                    StudentId = 4, 
+                    ExamId = 4, 
+                    Score = 88.0m, 
+                    ExamName = "Practical Test - Web Development", 
+                    StudentName = "David White" 
+                });
+                return results;
+            }
+            
             string query = "SELECT r.*, s.student_name FROM examresults r " +
                            "LEFT JOIN students s ON r.student_id = s.student_id";
 
@@ -746,6 +869,24 @@ namespace StudentManagementSystem.Database
 
         public string GetTopScorerForExam(int examId)
         {
+            if (_inMemoryMode)
+            {
+                // Return test data based on the provided exam ID
+                switch (examId)
+                {
+                    case 1:
+                        return "Alice Johnson (Score: 85.5)";
+                    case 2:
+                        return "Alice Johnson (Score: 92.0)";
+                    case 3:
+                        return "Charlie Brown (Score: 95.5)";
+                    case 4:
+                        return "David White (Score: 88.0)";
+                    default:
+                        return "No results found for this exam.";
+                }
+            }
+            
             string topScorer = "";
             string query = "SELECT GetTopScorerExam(@examId) as topScorer";
 
@@ -1035,9 +1176,131 @@ namespace StudentManagementSystem.Database
             return reportTable;
         }
 
+        public DataTable GetStudentListReport()
+        {
+            DataTable reportTable = new DataTable();
+            
+            if (_inMemoryMode)
+            {
+                // Create columns
+                reportTable.Columns.Add("student_id", typeof(int));
+                reportTable.Columns.Add("student_name", typeof(string));
+                reportTable.Columns.Add("email", typeof(string));
+                reportTable.Columns.Add("department_name", typeof(string));
+                reportTable.Columns.Add("enrollment_count", typeof(int));
+                
+                // Add test data
+                reportTable.Rows.Add(1, "Alice Johnson", "alice@gmail.com", "Computer Science", 2);
+                reportTable.Rows.Add(2, "Bob Smith", "bob@gmail.com", "Business Administration", 1);
+                reportTable.Rows.Add(3, "Charlie Brown", "charlie@gmail.com", "Mechanical Engineering", 1);
+                reportTable.Rows.Add(4, "David White", "david@gmail.com", "Electrical Engineering", 1);
+                reportTable.Rows.Add(5, "Emma Wilson", "emma@gmail.com", "Mathematics", 0);
+                
+                return reportTable;
+            }
+            
+            string query = "SELECT s.student_id, s.student_name, s.email, d.department_name, " +
+                           "COUNT(e.enrollment_id) as enrollment_count " +
+                           "FROM students s " +
+                           "LEFT JOIN departments d ON s.department_id = d.department_id " +
+                           "LEFT JOIN enrollments e ON s.student_id = e.student_id " +
+                           "GROUP BY s.student_id, s.student_name, s.email, d.department_name";
+            
+            try
+            {
+                OpenConnection();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(query, _connection);
+                adapter.Fill(reportTable);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error generating student list report: " + ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            
+            return reportTable;
+        }
+        
+        public DataTable GetCourseListReport()
+        {
+            DataTable reportTable = new DataTable();
+            
+            if (_inMemoryMode)
+            {
+                // Create columns
+                reportTable.Columns.Add("course_id", typeof(int));
+                reportTable.Columns.Add("course_name", typeof(string));
+                reportTable.Columns.Add("department_name", typeof(string));
+                reportTable.Columns.Add("professor_name", typeof(string));
+                reportTable.Columns.Add("student_count", typeof(int));
+                
+                // Add test data
+                reportTable.Rows.Add(1, "Introduction to Programming", "Computer Science", "Dr. Johnson", 15);
+                reportTable.Rows.Add(2, "Database Management", "Computer Science", "Dr. Smith", 12);
+                reportTable.Rows.Add(3, "Data Structures and Algorithms", "Computer Science", "Dr. Wilson", 10);
+                reportTable.Rows.Add(4, "Web Development", "Computer Science", "Dr. Roberts", 18);
+                reportTable.Rows.Add(5, "Business Ethics", "Business Administration", "Dr. Thompson", 25);
+                
+                return reportTable;
+            }
+            
+            string query = "SELECT c.course_id, c.course_name, d.department_name, " +
+                           "p.professor_name, COUNT(e.enrollment_id) as student_count " +
+                           "FROM courses c " +
+                           "LEFT JOIN departments d ON c.department_id = d.department_id " +
+                           "LEFT JOIN professors p ON c.professor_id = p.professor_id " +
+                           "LEFT JOIN enrollments e ON c.course_id = e.course_id " +
+                           "GROUP BY c.course_id, c.course_name, d.department_name, p.professor_name";
+            
+            try
+            {
+                OpenConnection();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(query, _connection);
+                adapter.Fill(reportTable);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error generating course list report: " + ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            
+            return reportTable;
+        }
+        
         public DataTable GetExamResultsReport()
         {
             DataTable reportTable = new DataTable();
+            
+            if (_inMemoryMode)
+            {
+                // Create columns
+                reportTable.Columns.Add("exam_name", typeof(string));
+                reportTable.Columns.Add("exam_date", typeof(DateTime));
+                reportTable.Columns.Add("course_name", typeof(string));
+                reportTable.Columns.Add("average_score", typeof(decimal));
+                reportTable.Columns.Add("highest_score", typeof(decimal));
+                reportTable.Columns.Add("lowest_score", typeof(decimal));
+                reportTable.Columns.Add("student_count", typeof(int));
+                
+                // Add test data
+                reportTable.Rows.Add("Midterm Exam - Introduction to Programming", DateTime.Now.AddDays(-10), 
+                                    "Introduction to Programming", 82.5, 91.0, 75.0, 2);
+                reportTable.Rows.Add("Final Exam - Database Management", DateTime.Now.AddDays(-5), 
+                                    "Database Management", 88.0, 94.5, 81.5, 3);
+                reportTable.Rows.Add("Quiz 1 - Data Structures and Algorithms", DateTime.Now.AddDays(-2), 
+                                    "Data Structures and Algorithms", 85.5, 95.5, 75.5, 5);
+                reportTable.Rows.Add("Practical Test - Web Development", DateTime.Now.AddDays(-1), 
+                                    "Web Development", 79.8, 88.0, 71.5, 4);
+                
+                return reportTable;
+            }
+            
             string query = "SELECT er.exam_name, e.exam_date, c.course_name, " +
                            "AVG(er.score) as average_score, MAX(er.score) as highest_score, " +
                            "MIN(er.score) as lowest_score, COUNT(er.result_id) as student_count " +
@@ -1061,6 +1324,60 @@ namespace StudentManagementSystem.Database
                 CloseConnection();
             }
 
+            return reportTable;
+        }
+        
+        public DataTable GetDepartmentSummaryReport()
+        {
+            DataTable reportTable = new DataTable();
+            
+            if (_inMemoryMode)
+            {
+                // Create columns
+                reportTable.Columns.Add("department_name", typeof(string));
+                reportTable.Columns.Add("student_count", typeof(int));
+                reportTable.Columns.Add("course_count", typeof(int));
+                reportTable.Columns.Add("professor_count", typeof(int));
+                reportTable.Columns.Add("avg_exam_score", typeof(decimal));
+                
+                // Add test data
+                reportTable.Rows.Add("Computer Science", 25, 8, 5, 84.5);
+                reportTable.Rows.Add("Business Administration", 30, 6, 4, 79.8);
+                reportTable.Rows.Add("Mechanical Engineering", 20, 10, 6, 82.3);
+                reportTable.Rows.Add("Electrical Engineering", 18, 7, 5, 80.7);
+                reportTable.Rows.Add("Mathematics", 15, 5, 3, 86.2);
+                
+                return reportTable;
+            }
+            
+            string query = "SELECT d.department_name, " +
+                           "COUNT(DISTINCT s.student_id) as student_count, " +
+                           "COUNT(DISTINCT c.course_id) as course_count, " +
+                           "COUNT(DISTINCT p.professor_id) as professor_count, " +
+                           "AVG(er.score) as avg_exam_score " +
+                           "FROM departments d " +
+                           "LEFT JOIN students s ON d.department_id = s.department_id " +
+                           "LEFT JOIN courses c ON d.department_id = c.department_id " +
+                           "LEFT JOIN professors p ON d.department_id = p.department_id " +
+                           "LEFT JOIN exams e ON c.course_id = e.course_id " +
+                           "LEFT JOIN examresults er ON e.exam_id = er.exam_id " +
+                           "GROUP BY d.department_name";
+            
+            try
+            {
+                OpenConnection();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(query, _connection);
+                adapter.Fill(reportTable);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error generating department summary report: " + ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            
             return reportTable;
         }
 

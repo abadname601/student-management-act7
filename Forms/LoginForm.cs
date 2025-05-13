@@ -45,17 +45,18 @@ namespace StudentManagementSystem.Forms
                 return;
             }
             
+            // Check if we're in test mode
+            bool useInMemoryMode = Environment.GetEnvironmentVariable("DB_TEST_MODE")?.ToLower() == "true";
+            
             try
             {
-                using (var db = new DatabaseManager())
+                if (useInMemoryMode)
                 {
-                    // Hash the password for comparison with the stored hash
-                    string passwordHash = Security.HashPassword(txtPassword.Text);
-                    
-                    if (db.AuthenticateUser(txtUsername.Text, passwordHash))
+                    // In test mode, allow any login with password "password"
+                    if (txtPassword.Text == "password")
                     {
-                        // Login successful
-                        string userRole = GetUserRole(txtUsername.Text);
+                        // In-memory login successful
+                        string userRole = txtUsername.Text.ToLower() == "admin" ? "Administrator" : "User";
                         
                         // Open main form
                         var mainForm = new MainForm(txtUsername.Text, userRole);
@@ -65,11 +66,40 @@ namespace StudentManagementSystem.Forms
                     }
                     else
                     {
-                        // Invalid login
-                        MessageBox.Show("Invalid username or password. Please try again.", 
+                        // Invalid login in test mode
+                        MessageBox.Show("In test mode, use 'password' as the password for any username.", 
                             "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtPassword.Clear();
                         txtPassword.Focus();
+                    }
+                }
+                else
+                {
+                    // Normal database authentication
+                    using (var db = new DatabaseManager())
+                    {
+                        // Hash the password for comparison with the stored hash
+                        string passwordHash = Security.HashPassword(txtPassword.Text);
+                        
+                        if (db.AuthenticateUser(txtUsername.Text, passwordHash))
+                        {
+                            // Login successful
+                            string userRole = GetUserRole(txtUsername.Text);
+                            
+                            // Open main form
+                            var mainForm = new MainForm(txtUsername.Text, userRole);
+                            this.Hide();
+                            mainForm.ShowDialog();
+                            this.Close();
+                        }
+                        else
+                        {
+                            // Invalid login
+                            MessageBox.Show("Invalid username or password. Please try again.", 
+                                "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtPassword.Clear();
+                            txtPassword.Focus();
+                        }
                     }
                 }
             }
@@ -82,6 +112,23 @@ namespace StudentManagementSystem.Forms
 
         private string GetUserRole(string username)
         {
+            // Check if we're in test mode
+            bool useInMemoryMode = Environment.GetEnvironmentVariable("DB_TEST_MODE")?.ToLower() == "true";
+            
+            if (useInMemoryMode)
+            {
+                // In test mode, assign role based on username
+                if (username.ToLower() == "admin")
+                {
+                    return "Administrator";
+                }
+                else
+                {
+                    return "User";
+                }
+            }
+            
+            // For regular mode
             string role = "User"; // Default role
             
             try

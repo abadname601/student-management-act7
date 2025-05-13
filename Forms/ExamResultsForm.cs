@@ -299,35 +299,95 @@ namespace StudentManagementSystem.Forms
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+    private bool ValidateInputs()
+    {
+        bool isValid = true;
+        
+        // Clear previous errors
+        _errorProvider.Clear();
+        
+        // Validate Result ID
+        if (string.IsNullOrWhiteSpace(txtResultId.Text))
         {
-            if (!ValidateInputs())
+            _errorProvider.SetError(txtResultId, "Result ID is required");
+            isValid = false;
+        }
+        else if (!int.TryParse(txtResultId.Text, out int id))
+        {
+            _errorProvider.SetError(txtResultId, "Result ID must be a number");
+            isValid = false;
+        }
+        
+        // Validate Exam Name
+        if (string.IsNullOrWhiteSpace(txtExamName.Text))
+        {
+            _errorProvider.SetError(txtExamName, "Exam Name is required");
+            isValid = false;
+        }
+        
+        // Validate Score
+        if (string.IsNullOrWhiteSpace(txtScore.Text))
+        {
+            _errorProvider.SetError(txtScore, "Score is required");
+            isValid = false;
+        }
+        else if (!decimal.TryParse(txtScore.Text, out decimal score))
+        {
+            _errorProvider.SetError(txtScore, "Score must be a number");
+            isValid = false;
+        }
+        else if (score < 0 || score > 100)
+        {
+            _errorProvider.SetError(txtScore, "Score must be between 0 and 100");
+            isValid = false;
+        }
+        
+        // Validate Student selection
+        if (cmbStudent.SelectedIndex <= 0) // Not selected or "None"
+        {
+            _errorProvider.SetError(cmbStudent, "Please select a student");
+            isValid = false;
+        }
+        
+        // Validate Exam selection
+        if (cmbExam.SelectedIndex <= 0) // Not selected or "None"
+        {
+            _errorProvider.SetError(cmbExam, "Please select an exam");
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+
+    private void btnSave_Click(object sender, EventArgs e)
+    {
+        if (!ValidateInputs())
+        {
+            return;
+        }
+        
+        try
+        {
+            bool success = false;
+            int resultId = int.Parse(txtResultId.Text);
+            string examName = txtExamName.Text;
+            decimal score = decimal.Parse(txtScore.Text);
+            
+            // Get selected student
+            Student selectedStudent = cmbStudent.SelectedItem as Student;
+            if (selectedStudent == null || selectedStudent.StudentId == 0)
             {
+                _errorProvider.SetError(cmbStudent, "Please select a student");
                 return;
             }
             
-            try
+            // Get selected exam
+            Exam selectedExam = cmbExam.SelectedItem as Exam;
+            if (selectedExam == null || selectedExam.ExamId == 0)
             {
-                bool success = false;
-                int resultId = int.Parse(txtResultId.Text);
-                string examName = txtExamName.Text;
-                decimal score = decimal.Parse(txtScore.Text);
-                
-                // Get selected student
-                Student selectedStudent = cmbStudent.SelectedItem as Student;
-                if (selectedStudent == null || selectedStudent.StudentId == 0)
-                {
-                    _errorProvider.SetError(cmbStudent, "Please select a student");
-                    return;
-                }
-                
-                // Get selected exam
-                Exam selectedExam = cmbExam.SelectedItem as Exam;
-                if (selectedExam == null || selectedExam.ExamId == 0)
-                {
-                    _errorProvider.SetError(cmbExam, "Please select an exam");
-                    return;
-                }
+                _errorProvider.SetError(cmbExam, "Please select an exam");
+                return;
+            }
                 
                 if (_currentMode == FormMode.Add)
                 {
@@ -529,65 +589,7 @@ namespace StudentManagementSystem.Forms
             }
         }
 
-        private bool ValidateInputs()
-        {
-            bool isValid = true;
-            
-            // Clear previous errors
-            _errorProvider.Clear();
-            
-            // Validate Result ID
-            if (string.IsNullOrWhiteSpace(txtResultId.Text))
-            {
-                _errorProvider.SetError(txtResultId, "Result ID is required");
-                isValid = false;
-            }
-            else if (!int.TryParse(txtResultId.Text, out int id))
-            {
-                _errorProvider.SetError(txtResultId, "Result ID must be a number");
-                isValid = false;
-            }
-            
-            // Validate Exam Name
-            if (string.IsNullOrWhiteSpace(txtExamName.Text))
-            {
-                _errorProvider.SetError(txtExamName, "Exam Name is required");
-                isValid = false;
-            }
-            
-            // Validate Score
-            if (string.IsNullOrWhiteSpace(txtScore.Text))
-            {
-                _errorProvider.SetError(txtScore, "Score is required");
-                isValid = false;
-            }
-            else if (!decimal.TryParse(txtScore.Text, out decimal score))
-            {
-                _errorProvider.SetError(txtScore, "Score must be a number");
-                isValid = false;
-            }
-            else if (score < 0 || score > 100)
-            {
-                _errorProvider.SetError(txtScore, "Score must be between 0 and 100");
-                isValid = false;
-            }
-            
-            // Validate Student selection
-            if (cmbStudent.SelectedIndex <= 0) // Not selected or "None"
-            {
-                _errorProvider.SetError(cmbStudent, "Please select a student");
-                isValid = false;
-            }
-            
-            // Validate Exam selection
-            if (cmbExam.SelectedIndex <= 0) // Not selected or "None"
-            {
-                _errorProvider.SetError(cmbExam, "Please select an exam");
-                isValid = false;
-            }
-            
-            return isValid;
-        }
+        // ValidateInputs method is defined further down in the file
 
         private void cmbExam_SelectedIndexChanged(object sender, EventArgs e)
         {

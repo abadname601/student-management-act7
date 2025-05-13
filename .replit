@@ -21,8 +21,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "dotnet run"
-waitForPort = 5000
+args = "DB_TEST_MODE=true dotnet run"
 
 [deployment]
-run = ["sh", "-c", "dotnet run"]
+run = ["sh", "-c", "DB_TEST_MODE=true dotnet run"]

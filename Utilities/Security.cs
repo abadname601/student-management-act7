@@ -7,32 +7,21 @@ namespace StudentManagementSystem.Utilities
     public class Security
     {
         /// <summary>
-        /// Computes SHA-256 hash of a given password with salt
+        /// Computes MD5 hash of a given password
         /// </summary>
-        public static string HashPassword(string password, string salt = null)
+        public static string HashPassword(string password)
         {
-            if (string.IsNullOrEmpty(salt))
+            using (MD5 md5 = MD5.Create())
             {
-                salt = GenerateSalt();
-            }
+                byte[] inputBytes = Encoding.ASCII.GetBytes(password);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
 
-            // Combine password and salt
-            string combinedString = password + salt;
-            
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                // Convert the input string to a byte array and compute the hash
-                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(combinedString));
-                
-                // Convert the byte array to a hexadecimal string
                 StringBuilder sb = new StringBuilder();
-                foreach (byte b in hashBytes)
+                for (int i = 0; i < hashBytes.Length; i++)
                 {
-                    sb.Append(b.ToString("x2"));
+                    sb.Append(hashBytes[i].ToString("X2"));
                 }
-                
-                // Return salt + hash (so we can verify later)
-                return salt + ":" + sb.ToString();
+                return sb.ToString();
             }
         }
 
@@ -41,21 +30,8 @@ namespace StudentManagementSystem.Utilities
         /// </summary>
         public static bool VerifyPassword(string password, string storedHash)
         {
-            // Extract the salt
-            string[] parts = storedHash.Split(':');
-            if (parts.Length != 2)
-            {
-                return false;
-            }
-
-            string salt = parts[0];
-            string hash = parts[1];
-            
-            // Hash the input password with the same salt
-            string newHash = HashPassword(password, salt);
-            
-            // Compare the newly generated hash with the stored hash
-            return newHash == storedHash;
+            string computedHash = HashPassword(password);
+            return computedHash.Equals(storedHash, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

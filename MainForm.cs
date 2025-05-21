@@ -39,10 +39,28 @@ namespace StudentManagementSystem
         {
             // Configure menu items based on user role
             bool isAdmin = _userRole.Equals("Administrator", StringComparison.OrdinalIgnoreCase);
+            bool isTeacher = _userRole.Equals("Teacher", StringComparison.OrdinalIgnoreCase);
             
             // User management is only available to admins
             btnUserManagement.Visible = isAdmin;
             mnuUserManagement.Visible = isAdmin;
+
+            // Course management and exam results are available to admins and teachers
+            btnCourseManagement.Visible = isAdmin || isTeacher;
+            mnuCourseManagement.Visible = isAdmin || isTeacher;
+            btnExamResults.Visible = isAdmin || isTeacher;
+            mnuExamResults.Visible = isAdmin || isTeacher;
+
+            // Reports are available to admins and teachers
+            btnReports.Visible = isAdmin || isTeacher;
+            mnuReports.Visible = isAdmin || isTeacher;
+
+            // Students can only access their own information and enrollment
+            if (_userRole.Equals("Student", StringComparison.OrdinalIgnoreCase))
+            {
+                btnStudentManagement.Visible = false;
+                mnuStudentManagement.Visible = false;
+            }
         }
 
         #region Menu Click Events

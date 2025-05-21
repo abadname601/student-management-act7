@@ -28,214 +28,214 @@ namespace StudentManagementSystem.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
-            this.lblPrompt = new System.Windows.Forms.Label();
-            this.pnlUsername = new System.Windows.Forms.Panel();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.pnlQuestion = new System.Windows.Forms.Panel();
-            this.lblQuestion = new System.Windows.Forms.Label();
-            this.txtAnswer = new System.Windows.Forms.TextBox();
-            this.pnlNewPassword = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtConfirmPassword = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtNewPassword = new System.Windows.Forms.TextBox();
-            this.panel1.SuspendLayout();
-            this.pnlUsername.SuspendLayout();
-            this.pnlQuestion.SuspendLayout();
-            this.pnlNewPassword.SuspendLayout();
-            this.SuspendLayout();
+            lblTitle = new Label();
+            panel1 = new Panel();
+            btnCancel = new Button();
+            btnNext = new Button();
+            lblPrompt = new Label();
+            pnlUsername = new Panel();
+            txtUsername = new TextBox();
+            pnlQuestion = new Panel();
+            lblQuestion = new Label();
+            txtAnswer = new TextBox();
+            pnlNewPassword = new Panel();
+            label2 = new Label();
+            txtConfirmPassword = new TextBox();
+            label1 = new Label();
+            txtNewPassword = new TextBox();
+            panel1.SuspendLayout();
+            pnlUsername.SuspendLayout();
+            pnlQuestion.SuspendLayout();
+            pnlNewPassword.SuspendLayout();
+            SuspendLayout();
             // 
             // lblTitle
             // 
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(484, 50);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Password Recovery";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.Location = new Point(0, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(484, 50);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Password Recovery";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnCancel);
-            this.panel1.Controls.Add(this.btnNext);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 311);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(484, 50);
-            this.panel1.TabIndex = 1;
+            panel1.Controls.Add(btnCancel);
+            panel1.Controls.Add(btnNext);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 311);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(484, 50);
+            panel1.TabIndex = 1;
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(252, 8);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 35);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.Anchor = AnchorStyles.None;
+            btnCancel.BackColor = Color.FromArgb(192, 0, 0);
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCancel.ForeColor = Color.White;
+            btnCancel.Location = new Point(252, 8);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(100, 35);
+            btnCancel.TabIndex = 1;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnNext
             // 
-            this.btnNext.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnNext.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.ForeColor = System.Drawing.Color.White;
-            this.btnNext.Location = new System.Drawing.Point(132, 8);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(100, 35);
-            this.btnNext.TabIndex = 0;
-            this.btnNext.Text = "Next";
-            this.btnNext.UseVisualStyleBackColor = false;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            btnNext.Anchor = AnchorStyles.None;
+            btnNext.BackColor = Color.FromArgb(41, 128, 185);
+            btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnNext.ForeColor = Color.White;
+            btnNext.Location = new Point(132, 8);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(100, 35);
+            btnNext.TabIndex = 0;
+            btnNext.Text = "Next";
+            btnNext.UseVisualStyleBackColor = false;
+            btnNext.Click += btnNext_Click;
             // 
             // lblPrompt
             // 
-            this.lblPrompt.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblPrompt.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrompt.Location = new System.Drawing.Point(0, 50);
-            this.lblPrompt.Name = "lblPrompt";
-            this.lblPrompt.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.lblPrompt.Size = new System.Drawing.Size(484, 40);
-            this.lblPrompt.TabIndex = 2;
-            this.lblPrompt.Text = "Please enter your username:";
+            lblPrompt.Dock = DockStyle.Top;
+            lblPrompt.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            lblPrompt.Location = new Point(0, 50);
+            lblPrompt.Name = "lblPrompt";
+            lblPrompt.Padding = new Padding(20, 10, 20, 10);
+            lblPrompt.Size = new Size(484, 40);
+            lblPrompt.TabIndex = 2;
+            lblPrompt.Text = "Please enter your username:";
             // 
             // pnlUsername
             // 
-            this.pnlUsername.Controls.Add(this.txtUsername);
-            this.pnlUsername.Location = new System.Drawing.Point(92, 115);
-            this.pnlUsername.Name = "pnlUsername";
-            this.pnlUsername.Size = new System.Drawing.Size(300, 40);
-            this.pnlUsername.TabIndex = 3;
+            pnlUsername.Controls.Add(txtUsername);
+            pnlUsername.Location = new Point(92, 115);
+            pnlUsername.Name = "pnlUsername";
+            pnlUsername.Size = new Size(300, 40);
+            pnlUsername.TabIndex = 3;
             // 
             // txtUsername
             // 
-            this.txtUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(0, 0);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(300, 29);
-            this.txtUsername.TabIndex = 0;
+            txtUsername.Dock = DockStyle.Fill;
+            txtUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtUsername.Location = new Point(0, 0);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(300, 39);
+            txtUsername.TabIndex = 0;
             // 
             // pnlQuestion
             // 
-            this.pnlQuestion.Controls.Add(this.lblQuestion);
-            this.pnlQuestion.Controls.Add(this.txtAnswer);
-            this.pnlQuestion.Location = new System.Drawing.Point(92, 115);
-            this.pnlQuestion.Name = "pnlQuestion";
-            this.pnlQuestion.Size = new System.Drawing.Size(300, 109);
-            this.pnlQuestion.TabIndex = 4;
-            this.pnlQuestion.Visible = false;
+            pnlQuestion.Controls.Add(lblQuestion);
+            pnlQuestion.Controls.Add(txtAnswer);
+            pnlQuestion.Location = new Point(92, 115);
+            pnlQuestion.Name = "pnlQuestion";
+            pnlQuestion.Size = new Size(300, 109);
+            pnlQuestion.TabIndex = 4;
+            pnlQuestion.Visible = false;
             // 
             // lblQuestion
             // 
-            this.lblQuestion.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblQuestion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQuestion.Location = new System.Drawing.Point(0, 0);
-            this.lblQuestion.Name = "lblQuestion";
-            this.lblQuestion.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.lblQuestion.Size = new System.Drawing.Size(300, 50);
-            this.lblQuestion.TabIndex = 1;
-            this.lblQuestion.Text = "Security question here?";
-            this.lblQuestion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblQuestion.Dock = DockStyle.Top;
+            lblQuestion.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblQuestion.Location = new Point(0, 0);
+            lblQuestion.Name = "lblQuestion";
+            lblQuestion.Padding = new Padding(0, 0, 0, 10);
+            lblQuestion.Size = new Size(300, 50);
+            lblQuestion.TabIndex = 1;
+            lblQuestion.Text = "Security question here?";
+            lblQuestion.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // txtAnswer
             // 
-            this.txtAnswer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtAnswer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAnswer.Location = new System.Drawing.Point(0, 80);
-            this.txtAnswer.Name = "txtAnswer";
-            this.txtAnswer.Size = new System.Drawing.Size(300, 29);
-            this.txtAnswer.TabIndex = 0;
+            txtAnswer.Dock = DockStyle.Bottom;
+            txtAnswer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtAnswer.Location = new Point(0, 70);
+            txtAnswer.Name = "txtAnswer";
+            txtAnswer.Size = new Size(300, 39);
+            txtAnswer.TabIndex = 0;
             // 
             // pnlNewPassword
             // 
-            this.pnlNewPassword.Controls.Add(this.label2);
-            this.pnlNewPassword.Controls.Add(this.txtConfirmPassword);
-            this.pnlNewPassword.Controls.Add(this.label1);
-            this.pnlNewPassword.Controls.Add(this.txtNewPassword);
-            this.pnlNewPassword.Location = new System.Drawing.Point(92, 115);
-            this.pnlNewPassword.Name = "pnlNewPassword";
-            this.pnlNewPassword.Size = new System.Drawing.Size(300, 150);
-            this.pnlNewPassword.TabIndex = 5;
-            this.pnlNewPassword.Visible = false;
+            pnlNewPassword.Controls.Add(label2);
+            pnlNewPassword.Controls.Add(txtConfirmPassword);
+            pnlNewPassword.Controls.Add(label1);
+            pnlNewPassword.Controls.Add(txtNewPassword);
+            pnlNewPassword.Location = new Point(92, 115);
+            pnlNewPassword.Name = "pnlNewPassword";
+            pnlNewPassword.Size = new Size(300, 150);
+            pnlNewPassword.TabIndex = 5;
+            pnlNewPassword.Visible = false;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 85);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(119, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Confirm Password:";
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(3, 85);
+            label2.Name = "label2";
+            label2.Size = new Size(172, 28);
+            label2.TabIndex = 3;
+            label2.Text = "Confirm Password:";
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConfirmPassword.Location = new System.Drawing.Point(0, 105);
-            this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.PasswordChar = '•';
-            this.txtConfirmPassword.Size = new System.Drawing.Size(300, 29);
-            this.txtConfirmPassword.TabIndex = 2;
+            txtConfirmPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtConfirmPassword.Location = new Point(0, 105);
+            txtConfirmPassword.Name = "txtConfirmPassword";
+            txtConfirmPassword.PasswordChar = '•';
+            txtConfirmPassword.Size = new Size(300, 39);
+            txtConfirmPassword.TabIndex = 2;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "New Password:";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(3, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(141, 28);
+            label1.TabIndex = 1;
+            label1.Text = "New Password:";
             // 
             // txtNewPassword
             // 
-            this.txtNewPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNewPassword.Location = new System.Drawing.Point(0, 35);
-            this.txtNewPassword.Name = "txtNewPassword";
-            this.txtNewPassword.PasswordChar = '•';
-            this.txtNewPassword.Size = new System.Drawing.Size(300, 29);
-            this.txtNewPassword.TabIndex = 0;
+            txtNewPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtNewPassword.Location = new Point(0, 35);
+            txtNewPassword.Name = "txtNewPassword";
+            txtNewPassword.PasswordChar = '•';
+            txtNewPassword.Size = new Size(300, 39);
+            txtNewPassword.TabIndex = 0;
             // 
             // ForgotPasswordForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 361);
-            this.Controls.Add(this.pnlNewPassword);
-            this.Controls.Add(this.pnlQuestion);
-            this.Controls.Add(this.pnlUsername);
-            this.Controls.Add(this.lblPrompt);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.lblTitle);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "ForgotPasswordForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Password Recovery";
-            this.Load += new System.EventHandler(this.ForgotPasswordForm_Load);
-            this.panel1.ResumeLayout(false);
-            this.pnlUsername.ResumeLayout(false);
-            this.pnlUsername.PerformLayout();
-            this.pnlQuestion.ResumeLayout(false);
-            this.pnlQuestion.PerformLayout();
-            this.pnlNewPassword.ResumeLayout(false);
-            this.pnlNewPassword.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(484, 361);
+            Controls.Add(pnlNewPassword);
+            Controls.Add(pnlQuestion);
+            Controls.Add(pnlUsername);
+            Controls.Add(lblPrompt);
+            Controls.Add(panel1);
+            Controls.Add(lblTitle);
+            Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "ForgotPasswordForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Password Recovery";
+            Load += ForgotPasswordForm_Load;
+            panel1.ResumeLayout(false);
+            pnlUsername.ResumeLayout(false);
+            pnlUsername.PerformLayout();
+            pnlQuestion.ResumeLayout(false);
+            pnlQuestion.PerformLayout();
+            pnlNewPassword.ResumeLayout(false);
+            pnlNewPassword.PerformLayout();
+            ResumeLayout(false);
 
         }
 

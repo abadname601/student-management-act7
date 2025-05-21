@@ -48,8 +48,8 @@ namespace StudentManagementSystem.Forms
             cmbRole.Items.Clear();
             cmbRole.Items.Add("Administrator");
             cmbRole.Items.Add("Teacher");
-            cmbRole.Items.Add("User");
-            cmbRole.SelectedIndex = 2; // Default to User
+            cmbRole.Items.Add("Student");
+            cmbRole.SelectedIndex = 2; // Default to Student
         }
 
         private void LoadUsers()
@@ -190,7 +190,7 @@ namespace StudentManagementSystem.Forms
             txtConfirmPassword.Clear();
             txtRecoveryQuestion.Clear();
             txtRecoveryAnswer.Clear();
-            cmbRole.SelectedIndex = 2; // Default to User
+            cmbRole.SelectedIndex = 2; // Default to Student
             _selectedUserId = null;
         }
 
@@ -401,7 +401,7 @@ namespace StudentManagementSystem.Forms
                     }
                     else
                     {
-                        cmbRole.SelectedIndex = 2; // Default to User
+                        cmbRole.SelectedIndex = 2; // Default to Student
                     }
                 }
             }

@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "StudentManagementSystem": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\angela\\source\\repos\\StudentManagementSystem",
+      "environmentVariables": {
+        "DB_TEST_MODE": "false"
+      }
+    }
+  }
+}

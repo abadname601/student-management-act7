@@ -2570,11 +2570,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\angela\\source\\repos\\StudentManagementSystem\\StudentManagementSystem.csproj",
+      "projectUniqueName": "C:\\Users\\angela\\source\\repos\\StudentManagement_act7\\StudentManagementSystem.csproj",
       "projectName": "StudentManagementSystem",
-      "projectPath": "C:\\Users\\angela\\source\\repos\\StudentManagementSystem\\StudentManagementSystem.csproj",
+      "projectPath": "C:\\Users\\angela\\source\\repos\\StudentManagement_act7\\StudentManagementSystem.csproj",
       "packagesPath": "C:\\Users\\angela\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\angela\\source\\repos\\StudentManagementSystem\\obj\\",
+      "outputPath": "C:\\Users\\angela\\source\\repos\\StudentManagement_act7\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

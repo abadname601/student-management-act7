@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PthlJ0EhOCI=",
+  "dgSpecHash": "XerxyIVax6w=",
   "success": true,
-  "projectFilePath": "C:\\Users\\angela\\source\\repos\\StudentManagementSystem\\StudentManagementSystem.csproj",
+  "projectFilePath": "C:\\Users\\angela\\source\\repos\\StudentManagement_act7\\StudentManagementSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\angela\\.nuget\\packages\\epplus\\6.2.3\\epplus.6.2.3.nupkg.sha512",
     "C:\\Users\\angela\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",

@@ -30,7 +30,6 @@ Database Setup:
 Default Login Credentials:
 - Admin: username = 'admin', password = 'admin'
 
-
 Troubleshooting:
 1. If you get database connection errors:
    - Verify MySQL Server is running
@@ -42,5 +41,4 @@ Troubleshooting:
    - Make sure .NET 6.0 Runtime is installed
    - Check Windows Event Viewer for error messages
 
-For Support:
-Contact your system administrator or refer to the project documentation. 
+ 

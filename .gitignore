@@ -3,6 +3,7 @@ bin/
 obj/
 # Output/
 *.exe
+!InstallerFolder/*.exe
 *.dll
 *.pdb
 
@@ -237,5 +238,5 @@ FodyWeavers.xsd
 Config/connection.config
 
 # Allow specific files
-!Setup/Output/
-!Setup/Output/StudentManagementSystem_Setup.exe 
+!InstallerFolder/
+!InstallerFolder/StudentManagementSystem_Setup.exe 
